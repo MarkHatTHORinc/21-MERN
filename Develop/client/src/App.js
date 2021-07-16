@@ -3,10 +3,18 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import SearchBooks from './pages/SearchBooks';
 import SavedBooks from './pages/SavedBooks';
 import Navbar from './components/Navbar';
-import { ApolloClient, ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 const client = new ApolloClient({
-  request: operation => {
+    cache: new InMemoryCache(),
+      // typePolicies: {
+      //   Book: {
+      //     keyFields: ["[authors]", "description", "bookId", "image", "link", "title"]
+      //   }
+      // }
+      // resultCaching: true
+    // });
+    request: operation => {
     const token = localStorage.getItem('id_token');
 
     operation.setContext({
